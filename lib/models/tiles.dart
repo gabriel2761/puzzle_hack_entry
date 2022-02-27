@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:puzzle_hack_slider/models/tile.dart';
 
 class Puzzle {
-  final dimensions = 3;
+  final dimensions = 6;
   final tiles = <Tile>[];
 
   Puzzle() {
-    for (var x = 0; x <= dimensions; x++) {
-      for (var y = 0; y <= (dimensions * 2) + 1; y++) {
-        if (x == dimensions && y == (dimensions * 2) + 1) {
+    for (var x = 0; x < dimensions; x++) {
+      for (var y = 0; y < (dimensions * 2) + 1; y++) {
+        if (x == dimensions - 1 && y == (dimensions * 2)) {
           tiles.add(Tile(x: x, y: y, value: -1, isWhiteSpace: true));
         } else {
           tiles.add(Tile(x: x, y: y, value: Random().nextInt(4) + 1));

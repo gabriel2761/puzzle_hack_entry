@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() => _puzzle.move(tile));
     await Future.delayed(Duration(milliseconds: 300));
     while (_puzzle.popMatches()) {
-      await Future.delayed(Duration(milliseconds: 500));
+      await Future.delayed(Duration(milliseconds: 100));
       setState(() {
         _puzzle.dropTiles();
       });
@@ -77,14 +77,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 : AnimatedAlign(
                     onEnd: () {},
                     alignment: Alignment(
-                      (tile.x - 2) / 2,
-                      (tile.y - 5) / 6,
+                      (tile.x - 4) / 4,
+                      (tile.y - (_puzzle.dimensions - 1.1) * 2) / (_puzzle.dimensions / 2),
                     ),
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                     child: AnimatedContainer(
-                      height: tile.removed ? 0 : 30,
-                      width: tile.removed ? 0 : 30,
+                      height: tile.removed ? 0 : 100,
+                      width: tile.removed ? 0 : 100,
                       color: _colors[tile.value - 1],
                       duration: Duration(milliseconds: 300),
                       onEnd: () {},
