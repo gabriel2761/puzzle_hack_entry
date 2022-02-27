@@ -19,19 +19,68 @@ class Puzzle {
   }
 
   void move(Tile tile) {
-    var swap = getSurroundingTiles(tile)
-        .singleWhere((e) => e.isWhiteSpace, orElse: () => tile);
+    var whitespace = tiles.singleWhere((e) {
+      return (e.y == tile.y || e.x == tile.x) && e.isWhiteSpace;
+    }, orElse: () => tile);
 
-    print([swap.y, swap.x]);
+    if (whitespace.x == tile.x) {
+      if (whitespace.y > tile.y) {
+        var tiles = this.tiles.where((e) {
+          return e.y >= tile.y && e.y <= whitespace.y && e.x == tile.x;
+        }).toList();
 
-    var tempX = swap.x;
-    var tempY = swap.y;
+        tiles.sort((a, b) => a.y.compareTo(b.y));
 
-    swap.x = tile.x;
-    swap.y = tile.y;
+        var tempY = tile.y;
+        for (var i = 0; i < tiles.length - 1; i++) {
+          tiles[i].y = tiles[i + 1].y;
+        }
 
-    tile.x = tempX;
-    tile.y = tempY;
+        whitespace.y = tempY;
+      } else if (whitespace.y < tile.y) {
+        var tiles = this.tiles.where((e) {
+          return e.y <= tile.y && e.y >= whitespace.y && e.x == tile.x;
+        }).toList();
+
+        tiles.sort((a, b) => b.y.compareTo(a.y));
+
+        var tempY = tile.y;
+        for (var i = 0; i < tiles.length - 1; i++) {
+          print(tiles[i].y);
+          tiles[i].y = tiles[i + 1].y;
+        }
+
+        whitespace.y = tempY;
+      }
+    } else if (whitespace.y == tile.y) {
+      if (whitespace.x > tile.x) {
+        var tiles = this.tiles.where((e) {
+          return e.x >= tile.x && e.x <= whitespace.x && e.y == tile.y;
+        }).toList();
+
+        tiles.sort((a, b) => a.x.compareTo(b.x));
+
+        var tempX = tile.x;
+        for (var i = 0; i < tiles.length - 1; i++) {
+          tiles[i].x = tiles[i + 1].x;
+        }
+
+        whitespace.x = tempX;
+      } else if (whitespace.x < tile.x) {
+        var tiles = this.tiles.where((e) {
+          return e.x <= tile.x && e.x >= whitespace.x && e.y == tile.y;
+        }).toList();
+
+        tiles.sort((a, b) => b.x.compareTo(a.x));
+
+        var tempX = tile.x;
+        for (var i = 0; i < tiles.length - 1; i++) {
+          tiles[i].x = tiles[i + 1].x;
+        }
+
+        whitespace.x = tempX;
+      }
+    }
   }
 
   List<Tile> getSurroundingTiles(Tile tile) {

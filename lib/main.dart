@@ -78,7 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     onEnd: () {},
                     alignment: Alignment(
                       (tile.x - 4) / 4,
-                      (tile.y - (_puzzle.dimensions - 1.1) * 2) / (_puzzle.dimensions / 2),
+                      (tile.y - (_puzzle.dimensions - 1.1) * 2) /
+                          (_puzzle.dimensions / 2),
                     ),
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
